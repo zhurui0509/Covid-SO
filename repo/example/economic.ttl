@@ -1,0 +1,77 @@
+##### Example triples of COVID-19 using SOSA-adopted COVID-19 Forecast Ontology #######
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix econ: <http://econ.geog.ucsb.edu/lod/economy/> .
+@prefix econ-model: <http://covid.geog.ucsb.edu/lod/economic-model/> .
+@prefix econ-spending: <http://covid.geog.ucsb.edu/lod/spending/> .
+@prefix econ-burning-glass: <http://covid.geog.ucsb.edu/lod/job-posting/> .
+
+
+######## ObversedCollection from Affinity on Spending statistics ###############
+econ-spending:affinity-2020-06-15-daily a econ:EconomicSpending ;
+    rdfs:label "Speding data collected from Affinity on 2020-08-21" ;
+    sosa:resultTime "2020-06-15T00:00:00" ;
+    sosa:madeBySensor econ-model:Affinity ;
+    sosa:hasMember econ-stat:2020-06-15-Affinity-spend_acf_daily_01 ;
+        econ-stat:2020-06-15-Affinity_spend_apg_daily_02 .
+
+econ-stat:2020-06-15-Affinity_spend_acf_daily_01 a econ:EconomicStatistics ;
+    sosa:phenomenonTime covid-instant:2020-06-15  ;
+    sosa:hasFeatureOfInterest covid-place:01 ;
+    sosa:observedProperty econ-obs-property:spend_acf ;
+    covid:point -0.204 .
+
+econ-stat:2020-06-15-Affinity_spend_apg_daily_02 a econ:EconomicStatistics ;
+    sosa:phenomenonTime covid-instant:2020-06-15  ;
+    sosa:hasFeatureOfInterest covid-place:02 ;
+    sosa:observedProperty econ-obs-property:spend_apg ;
+    covid:point -0.372 .
+
+######## ObversedCollection from Burning Glass on Job Posts statistics ###############
+econ-burning-glass:burning-glass-2020-08-14-weekly a econ:JobPosting ;
+	rdfs:label "Job postings data from Burning Glass Technologies on 2020-08-14 (date end of week)" ;
+    sosa:phenomenonTime covid-instant:2020-08-14-weekly ;
+    sosa:madeBySensor econ-model:BurningGlass ;
+    sosa:hasMember econ-stat:2020-08-14-BurningGlass_bg_posts_ss30_01 ;
+        econ-stat:2020-08-14-BurningGlass_bg_posts_ss55_02 .
+
+econ-stat:2020-08-14-BurningGlass_bg_posts_ss30_01 a econ:EconomicStatistics ;
+    sosa:hasFeatureOfInterest covid-place:01 ;
+    sosa:observedProperty econ-obs-property:bg_posts_ss30 ;
+    covid:point -0.518	.
+
+econ-stat:2020-08-14-BurningGlass_bg_posts_ss55_02 a econ:EconomicStatistics ;
+    sosa:hasFeatureOfInterest covid-place:02 ;
+    sosa:observedProperty econ-obs-property:bg_posts_ss55 ;
+    covid:point -0.0964	.
+
+######## Define associated ObservableProperty and TemporalEntity ###############
+econ-obs-property:spend_acf a sosa:ObservableProperty ; 
+    rdfs:label "Seasonally adjusted credit/debit card spending relative to January 4-31 2020 in accomodation and food service (ACF) MCCs, 7 day moving average" .
+
+econ-obs-property:spend_apg a sosa:ObservableProperty ;
+    rdfs:label "Seasonally adjusted credit/debit card spending relative to January 4-31 2020 in general merchandise stores (GEN) and apparel and accessories (AAP) MCCs, 7 day moving average"
+
+econ-obs-property:bg_posts_ss30 a sosa:ObservableProperty ;
+    rdfs:label "Average level of job postings relative to January 4-31 2020 in manufacturing (NAICS supersector 30)" . 
+
+econ-obs-property:bg_posts_ss55 a sosa:ObservableProperty ;
+    rdfs:label "Average level of job postings relative to January 4-31 2020 in financial activities (NAICS supersector 55)" . 
+
+covid-instant:2020-06-15 a time:TemporalEntity ;
+	rdfs:label "2020-06-15" .
+
+covid-instant:2020-08-07 a time:TemporalEntity ;
+	rdfs:label "2020-08-07" .
+
+covid-instant:2020-08-14 a time:TemporalEntity ;
+	rdfs:label "2020-08-14" .
+
+covid-instant:2020-08-14-weekly a time:TemporalEntity ;
+	 time:hasBeginning covid-instant:2020-08-07 ;
+	 time:hasEnd covid-instant:2020-08-14 .

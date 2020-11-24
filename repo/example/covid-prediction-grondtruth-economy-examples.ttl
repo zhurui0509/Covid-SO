@@ -1,0 +1,230 @@
+@prefix covid: <http://covid.geog.ucsb.edu/lod/ontology/> .
+@prefix covid-license: <http://covid.geog.ucsb.edu/lod/license/> .
+@prefix covid-method: <http://covid.geog.ucsb.edu/lod/method/> .
+@prefix covid-method-type: <http://covid.geog.ucsb.edu/lod/methodtype/> .
+@prefix covid-assumption: <http://covid.geog.ucsb.edu/lod/assumption/> .
+@prefix covid-assumption-type: <http://covid.geog.ucsb.edu/lod/assumptiontype/> .
+@prefix covid-model: <http://covid.geog.ucsb.edu/lod/model/> .
+@prefix covid-model-designation: <http://covid.geog.ucsb.edu/lod/modelDesignation/> .
+@prefix covid-owner: <http://covid.geog.ucsb.edu/lod/owner/> .
+@prefix covid-target: <http://covid.geog.ucsb.edu/lod/target/> .
+@prefix covid-target-type: <http://covid.geog.ucsb.edu/lod/target-type/> .
+@prefix covid-forecast: <http://covid.geog.ucsb.edu/lod/prediction/> .
+@prefix covid-research: <http://covid.geog.ucsb.edu/lod/research/> .
+@prefix covid-ground-truth: <http://covid.geog.ucsb.edu/lod/groundTruth/> .
+@prefix covid-obs-property: <http://covid.geog.ucsb.edu/lod/observedproperty/> .
+
+
+@prefix econ: <http://econ.geog.ucsb.edu/lod/economy/> .
+@prefix econ-model: <http://covid.geog.ucsb.edu/lod/economic-model/> .
+@prefix econ-obs-property: <http://covid.geog.ucsb.edu/lod/econ_obs_property/> .
+@prefix econ-spending: <http://covid.geog.ucsb.edu/lod/spending/> .
+@prefix econ-spending-stat: <http://covid.geog.ucsb.edu/lod/spending_stat/> .
+@prefix econ-spending-stat-collection: <http://covid.geog.ucsb.edu/lod/spending_stat_collection/> .
+
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+
+
+##################  Prediction example (we have 72 sensors like YYG-ParamSearch) ##########################################
+covid-research:YYG-ParamSearch a covid:Research ;
+    rdfs:label "YYG-ParamSearch" ;
+    sosa:madeBySensor covid-model:YYG-ParamSearch ;
+    sosa:usedProcedure covid-method:ParamSearch .
+    sosa:hasMember covid-forecast:2020-08-31-YYG-ParamSearch
+
+covid-method:ParamSearch a covid:Method ;
+    rdfs:label "ParamSearch" .
+
+covid-model:YYG-ParamSearch a covid:Model ;
+    rdfs:label "YYG-ParamSearch" ;
+    covid:hasLicense covid-license:cc-by-4.0 ;
+    covid:hasName "ParamSearch" ;
+    covid:hasWebsite <https://covid19-projections.com> ;
+    covid:modelBrief "An SEIR model that makes daily infections and deaths projections for US states.  A machine learning layer learns the best parameters/inputs for each state.  The model accounts for state reopenings." ;
+    covid:modelDesc "'We''ve built a SEIR model with learned parameters to make daily  projections regarding COVID-19 infections and deaths in all 50 US states and  70+ countries. The model also accounts for individual state-by-state reopenings  and the resulting effects on infections and deaths. The parameters/inputs  of this simulator are learned using hyperparameter optimization that minimizes  the error between the projected outputs (projected daily deaths) and the actual  results (reported daily deaths). Because the infections curve is unique for every  region, we let the model use each region''s own data to learn the best set of parameters  for that region. This includes parameters such as: mortality rate, initial R_0,  post-lockdown R, and the inflection date of any lockdowns. Other variables such  as the latency period, infectious period, and virus shedding period are fixed based  on published literature. After some additional validation techniques to minimize  overfitting, we use the learned parameters to simulate the future and make  projections. See website for full description, methods, and results.'" ;
+    covid:modelDesignation covid-model-designation:primary ;
+    covid:owner covid-owner:Youyang_Gu_YYG ;
+    covid:hasAssumption covid-assumption:YYG-ParamSearch_Assumption .
+
+covid-owner:Youyang_Gu_YYG a covid:Team ;
+    rdfs:label "Youyang Gu (YYG)" .
+
+covid-assumption:YYG-ParamSearch_Assumption a covid:Assumption ;
+    covid:assumptionFull_sd "accounts for individual state-by-state re-openings and their impact on infections and deaths" ;
+    covid:assumptionType_sd covid-assumption-type:sd_continue .
+
+covid-assumption-type:sd_continue a covid:AssumptionType ;
+    rdfs:label "existing social distancing measures in each state will continue through the projected four-week time period." .
+
+
+covid-model-designation:primary a covid:ModelDesignation ;
+    rdfs:label "primary" .
+
+covid-license:cc-by-4.0 a covid:License ;
+    rdfs:label "cc-by-4.0" .
+
+covid-forecast:2020-08-31-YYG-ParamSearch a covid:Forecast ;
+    rdfs:label "2020-08-31-YYG-ParamSearch" ;
+    sosa:resultTime "2020-08-31" .
+    sosa:hasMember covid-target:2020-08-31-YYG-ParamSearch_1-wk-ahead-cum-death_01,
+        covid-target:2020-08-31-YYG-ParamSearch_1-wk-ahead-cum-death_02 .
+
+covid-target:2020-08-31-YYG-ParamSearch_1-wk-ahead-cum-death_01 a covid:Target ;
+    covid:hasTargetType covid-target-type:1_wk_ahead_cum_death ;
+    covid:point 2.258401e+03 ;
+    covid:quantile_0.01 2.214379e+03 ;
+    covid:quantile_0.025 2.22024e+03 ;
+    covid:quantile_0.05 2.225117e+03 ;
+    covid:quantile_0.1 2.23145e+03 ;
+    covid:quantile_0.15 2.235452e+03 ;
+    covid:quantile_0.2 2.238506e+03 ;
+    covid:quantile_0.25 2.241627e+03 ;
+    covid:quantile_0.3 2.24424e+03 ;
+    covid:quantile_0.35 2.247593e+03 ;
+    covid:quantile_0.4 2.250864e+03 ;
+    covid:quantile_0.45 2.253299e+03 ;
+    covid:quantile_0.5 2.256613e+03 ;
+    covid:quantile_0.55 2.258857e+03 ;
+    covid:quantile_0.6 2.261663e+03 ;
+    covid:quantile_0.65 2.26556e+03 ;
+    covid:quantile_0.7 2.269214e+03 ;
+    covid:quantile_0.75 2.272881e+03 ;
+    covid:quantile_0.8 2.27742e+03 ;
+    covid:quantile_0.85 2.283356e+03 ;
+    covid:quantile_0.9 2.28932e+03 ;
+    covid:quantile_0.95 2.298621e+03 ;
+    covid:quantile_0.975 2.30662e+03 ;
+    covid:quantile_0.99 2.316912e+03 ;
+    sosa:hasFeatureOfInterest covid-place:01 ;
+    sosa:observedProperty covid-obs-property:cum_death ;
+    sosa:phenomenonTime covid-instant:2020-09-05 .
+
+covid-target:2020-08-31-YYG-ParamSearch_1-wk-ahead-cum-death_02 a covid:Target ;
+    covid:hasTargetType covid-target-type:1_wk_ahead_cum_death ;
+    covid:point 4.007662e+01 ;
+    covid:quantile_0.01 3.88659e+01 ;
+    covid:quantile_0.025 3.89979e+01 ;
+    covid:quantile_0.05 3.912958e+01 ;
+    covid:quantile_0.1 3.927428e+01 ;
+    covid:quantile_0.15 3.940182e+01 ;
+    covid:quantile_0.2 3.950252e+01 ;
+    covid:quantile_0.25 3.958336e+01 ;
+    covid:quantile_0.3 3.966587e+01 ;
+    covid:quantile_0.35 3.976095e+01 ;
+    covid:quantile_0.4 3.983161e+01 ;
+    covid:quantile_0.45 3.990642e+01 ;
+    covid:quantile_0.5 3.998623e+01 ;
+    covid:quantile_0.55 4.006584e+01 ;
+    covid:quantile_0.6 4.015961e+01 ;
+    covid:quantile_0.65 4.025629e+01 ;
+    covid:quantile_0.7 4.037249e+01 ;
+    covid:quantile_0.75 4.049392e+01 ;
+    covid:quantile_0.8 4.065521e+01 ;
+    covid:quantile_0.85 4.080411e+01 ;
+    covid:quantile_0.9 4.10152e+01 ;
+    covid:quantile_0.95 4.133994e+01 ;
+    covid:quantile_0.975 4.156996e+01 ;
+    covid:quantile_0.99 4.178298e+01 ;
+    sosa:hasFeatureOfInterest covid-place:02 ;
+    sosa:observedProperty covid-obs-property:cum_death ;
+    sosa:phenomenonTime covid-instant:2020-09-05 .
+
+covid-place:01 a covid:Place ;
+    covid:hasPlaceName "Alabama" ;
+    covid:placeFIPS "01" ;
+    owl:sameAs WDT:Q173 .
+
+covid-place:02 a covid:Place ;
+    covid:hasPlaceName "Alaska" ;
+    covid:placeFIPS "02" ;
+    owl:sameAs WDT:Q797 .
+
+covid-target-type:1_wk_ahead_cum_death a covid:TargetType ;
+    rdfs:label "1 wk ahead cum death" .
+
+covid-instant:2020-09-05 a covid:Instant ;
+    owl:inXSDDateTime "2020-09-05" .
+
+covid-obs-property:cum_death a covid:ObservedProperty ;
+    rdfs:label "cumulative death" .
+
+####################### Groundtruth example  ########################
+covid-ground-truth:2020-08-30-GroundTruth-cum_death_01 a covid:GroundTruth ;
+    rdfs:label "2020-08-30 ground truth of cum_death at 01" ;
+    covid:point 2162 ;
+    sosa:hasFeatureOfInterest covid-place:01 ;
+    sosa:observedProperty covid-obs-property:cum_death ;
+    sosa:phenomenonTime covid-instant:2020-08-30 .
+
+covid-ground-truth:2020-08-30-GroundTruth-cum_death_02 a covid:GroundTruth ;
+    rdfs:label "2020-08-30 ground truth of cum_death at 02" ;
+    covid:point 37 ;
+    sosa:hasFeatureOfInterest covid-place:02 ;
+    sosa:observedProperty covid-obs-property:cum_death ;
+    sosa:phenomenonTime covid-instant:2020-08-30 . 
+
+covid-instant:2020-08-30 a covid:Instant ;
+    owl:inXSDDateTime "2020-08-30" .
+
+
+##################### Economy example (we have data related to job postings, credit cards usage, small business, employment data.) #########################
+###### Spatial resolution - state and national #########
+##### Temporal resolution - daily or weekly #######
+
+econ-affinity:state-daily a econ:EconomicTracker 
+    rdfs:label "State level aggregated and anonymized purchase data from consumer credit and debit card spending. Spending is reported based on the ZIP code where the cardholder lives, not the ZIP code where transactions occurred." ;
+    sosa:hasMember econ-affinity-stat-collection:2020-08-15-affinity-state-daily-01,
+        econ-affinity-stat-collection:2020-08-15-affinity-state-daily-02 ;
+    sosa:madeBySensor econ:Affinity  ;
+    sosa:resultTime "2020-09-07" .
+
+econ-affinity-stat-collection:2020-08-15-affinity-state-daily-01 a econ:StatsCollection ;
+    sosa:hasFeatureOfInterest covid-place:01 ;
+    sosa:hasMember econ-affinity-stat:2020-08-15-affinity-state-daily-acf-01,
+        econ-affinity-stat:2020-08-15-affinity-state-daily-aer-01,
+        econ-affinity-stat:2020-08-15-affinity-state-daily-all-01 ;
+    sosa:phenomenonTime covid-instant:2020-08-15 .
+
+econ-affinity-stat-collection:2020-08-15-affinity-state-daily-02 a econ:StatsCollection ;
+    sosa:hasFeatureOfInterest covid-place:02 ;
+    sosa:hasMember econ-affinity-stat:2020-08-15-affinity-state-daily-acf-02,
+        econ-affinity-stat:2020-08-15-affinity-state-daily-aer-02,
+        econ-affinity-stat:2020-08-15-affinity-state-daily-all-02 ;
+    sosa:phenomenonTime covid-instant:2020-08-15 .
+
+econ-affinity-stat:2020-08-15-affinity-state-daily-acf-01 covid:point -1.1e-01 ;
+    sosa:observedProperty econ-obs-property:spend_acf .
+
+econ-affinity-stat:2020-08-15-affinity-state-daily-acf-02 covid:point -3.68e-01 ;
+    sosa:observedProperty econ-obs-property:spend_acf .
+
+econ-affinity-stat:2020-08-15-affinity-state-daily-aer-01 covid:point -3.03e-01 ;
+    sosa:observedProperty econ-obs-property:spend_aer .
+
+econ-affinity-stat:2020-08-15-affinity-state-daily-aer-02 covid:point -5.93e-01 ;
+    sosa:observedProperty econ-obs-property:spend_aer .
+
+econ-affinity-stat:2020-08-15-affinity-state-daily-all-01 covid:point 5.99e-02 ;
+    sosa:observedProperty econ-obs-property:spend_all .
+
+econ-affinity-stat:2020-08-15-affinity-state-daily-all-02 covid:point -1.19e-01 ;
+    sosa:observedProperty econ-obs-property:spend_all .
+
+covid-instant:2020-08-15 a time:Instant ;
+    owl:inXSDDateTime "2020-08-15" .
+
+econ-obs-property:spend_acf a sosa:ObservableProperty ;
+    rdfs:label "Seasonally adjusted credit/debit card spending relative to January 4-31 2020 in accomodation and food service (ACF) MCCs, 7 day moving average" .
+
+econ-obs-property:spend_aer a sosa:ObservableProperty ;
+    rdfs:label "Seasonally adjusted credit/debit card spending relative to January 4-31 2020 in arts, entertainment, and recreation (AER) MCCs, 7 day moving average" .
+
+econ-obs-property:spend_all a sosa:ObservableProperty ;
+    rdfs:label "Seasonally adjusted credit/debit card spending relative to January 4-31 2020 in all merchant category codes (MCC), 7 day moving average" .
